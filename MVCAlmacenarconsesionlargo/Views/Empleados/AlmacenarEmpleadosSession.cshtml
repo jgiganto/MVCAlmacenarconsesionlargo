@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "AlmacenarEmpleadosSession";
+}
+
+<h2>AlmacenarEmpleadosSession</h2>
+
+@model IQueryable<MVCAlmacenarconsesionlargo.Models.EMP>
+
+ 
+
+@{
+    List<int> lista = (List<int>)Session["EMPLEADOS"];
+}
+
+<ul>
+    @foreach (var emp in Model)
+    {
+        <li>
+            @emp.APELLIDO
+            @if (lista == null)
+            {
+                @Html.ActionLink("Almacenar empleado"
+                 , "AlmacenarEmpleadosSession", "Empleados"
+                 , new { empno = @emp.EMP_NO }
+                 , new { @htmlattr = "value" })
+            }
+            else
+            {
+                if (lista.Contains(emp.EMP_NO))
+                {
+                    <img src='@Url.Content("~/Images/ok.jpg")'
+                         style="width:50px;height:50px" />
+                }
+                else
+                {
+                    @Html.ActionLink("Almacenar empleado"
+                    , "AlmacenarEmpleadosSession", "Empleados"
+                    , new { empno = @emp.EMP_NO }
+                    , new { @htmlattr = "value" })
+                }
+            }
+        </li>
+    }
+</ul>
+<h2 style="color:blue">
+    @ViewBag.Mensaje
+</h2>
+@Html.ActionLink("Resumen de empleados"
+, "MostrarEmpleadosSession", "Empleados")

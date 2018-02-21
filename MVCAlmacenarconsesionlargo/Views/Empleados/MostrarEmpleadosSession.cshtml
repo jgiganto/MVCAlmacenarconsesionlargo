@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "MostrarEmpleadosSession";
+}
+
+<h2>MostrarEmpleadosSession</h2>
+
+@model IQueryable<MVCAlmacenarconsesionlargo.Models.EMP>
+
+ 
+
+@if (Session["EMPLEADOS"] == null)
+{
+    <h2 style="color:red">
+        No hay empleados en la Session
+    </h2>
+}
+else
+{
+    <dl>
+        @foreach (var emp in Model)
+        {
+            <dt>@emp.APELLIDO</dt>
+            <dd>@emp.OFICIO</dd>
+            <dd>
+                @Html.ActionLink("Quitar de Session"
+                , "MostrarEmpleadosSession", "Empleados"
+                , new { eliminar = @emp.EMP_NO }, new { @htmlattr = "value" })
+            </dd>
+        }
+    </dl>
+}
+@Html.ActionLink("Volver", "AlmacenarEmpleadosSession", "Empleados")
